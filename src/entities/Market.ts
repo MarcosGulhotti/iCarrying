@@ -20,7 +20,7 @@ export class Market {
     password!: string;
 
     @Column()
-    adress!: string;
+    address!: string;
 
     @OneToOne(type => Cart) @JoinColumn()
     cartId!: Cart;
