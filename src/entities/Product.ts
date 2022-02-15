@@ -1,4 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+} from "typeorm";
 import { Suplier } from "./Suplier";
 
 @Entity()
@@ -21,5 +27,7 @@ export class Product {
   @Column()
   suplierId!: string;
 
-  @ManyToOne((type) => Suplier) suplier!: Suplier;
+  @ManyToOne((type) => Suplier)
+  @JoinColumn()
+  suplier!: Suplier;
 }
