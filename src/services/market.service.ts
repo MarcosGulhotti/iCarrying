@@ -1,5 +1,6 @@
 import { getRepository } from "typeorm";
 import { Market, Cart } from "../entities";
+import AppError from "../errors/AppError";
 
 interface IRegisterBody {
     name: string;
@@ -35,7 +36,7 @@ export const createMarket = async (body: IRegisterBody) => {
 
         return marketNoPassword;
     } catch (error) {
-        console.log(error);
+        throw new AppError((error as any).message, 400);
     }
 }
 
@@ -50,9 +51,9 @@ export const getMarketById = async (marketId: string) => {
 
             return marketNoPassword;
         } else {
-            console.log("market not found");
+            throw new AppError("Market not found", 404);
         }
     } catch (error) {
-        console.log(error);
+        throw new AppError("Market not found", 404);
     }
 }
