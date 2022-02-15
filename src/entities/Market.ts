@@ -1,5 +1,6 @@
 import {Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn, BeforeInsert} from "typeorm";
 import bcrypt from "bcrypt";
+import { Cart } from "./Cart";
 
 @Entity()
 export class Market {
@@ -20,6 +21,9 @@ export class Market {
 
     @Column()
     adress!: string;
+
+    @OneToOne(type => Cart) @JoinColumn()
+    cartId!: Cart;
 
     @BeforeInsert()
     hashPassword() {
