@@ -38,3 +38,21 @@ export const createMarket = async (body: IRegisterBody) => {
         console.log(error);
     }
 }
+
+export const getMarketById = async (marketId: string) => {
+    const marketRepository = getRepository(Market);
+    
+    try {
+        const market = await marketRepository.findOne(marketId);
+
+        if (market !== undefined) {
+            const marketNoPassword = removePassword(market);
+
+            return marketNoPassword;
+        } else {
+            console.log("market not found");
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
