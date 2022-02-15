@@ -35,4 +35,4 @@ if(process.env.NODE_ENV === "production") {
     exportModule = devEnv;
 }
 
-mudole.exports = exportModule;
+module.exports = exportModule;

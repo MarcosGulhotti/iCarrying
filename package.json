@@ -4,9 +4,12 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "typeorm": "ts-node-dev node_modules/typeorm/cli.js",
     "dev": "ts-node-dev src/server.ts"
   },
   "dependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "bcrypt": "^5.0.1",
     "express": "^4.17.2",
     "pg": "^8.7.3",
     "pgtools": "^0.3.2",
