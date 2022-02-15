@@ -18,8 +18,5 @@ export class Product {
   @Column()
   image!: string;
 
-  @Column()
-  suplierId!: string;
-
   @ManyToOne((type) => Suplier) suplier!: Suplier;
 }
