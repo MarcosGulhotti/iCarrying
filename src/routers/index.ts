@@ -13,4 +13,3 @@ export const initializerRouter = (app: Express) => {
   app.use("/truck", truckRouter());
   app.use("/login", loginRouter());
 };
-

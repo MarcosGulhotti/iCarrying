@@ -1,10 +1,11 @@
 import { Router } from "express";
-import { marketLogin } from "../controllers/login.controller";
+import { marketLogin, supplierLogin } from "../controllers/login.controller";
 
 const router = Router();
 
 export const loginRouter = () => {
   router.post("/market", marketLogin);
+  router.post("/suplier", supplierLogin);
 
   return router;
 };
