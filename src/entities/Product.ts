@@ -19,13 +19,10 @@ export class Product {
   price!: string;
 
   @Column()
-  description!: number;
+  description!: string;
 
   @Column()
   image!: string;
-
-  @Column()
-  suplierId!: string;
 
   @ManyToOne((type) => Suplier)
   @JoinColumn()
