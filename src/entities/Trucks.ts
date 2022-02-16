@@ -1,9 +1,7 @@
 import {
   Entity,
   PrimaryGeneratedColumn,
-  Column,
-  JoinColumn,
-  OneToOne,
+  Column
 } from "typeorm";
 
 @Entity()
@@ -11,6 +9,6 @@ export class Trucks {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
-  @Column()
+  @Column({ unique: true })
   plate!: string;
 }
