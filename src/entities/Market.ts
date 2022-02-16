@@ -10,10 +10,10 @@ export class Market {
     @Column()
     name!: string;
 
-    @Column({unique: true})
+    @Column({ unique: true })
     cnpj!: string;
 
-    @Column({unique: true})
+    @Column({ unique: true })
     email!: string;
 
     @Column()
