@@ -22,8 +22,8 @@ export class Market {
     @Column()
     address!: string;
 
-    @OneToOne(type => Cart) @JoinColumn()
-    cartId!: Cart;
+    @OneToOne(type => Cart, { onDelete: 'CASCADE' }) @JoinColumn()
+    cart!: Cart;
 
     @BeforeInsert()
     hashPassword() {
