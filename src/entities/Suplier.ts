@@ -21,7 +21,7 @@ export class Suplier {
   @Column()
   address!: string;
 
-  @Column()
+  @Column({ nullable: true, default: 0 })
   grade!: string;
 
   @BeforeInsert()
