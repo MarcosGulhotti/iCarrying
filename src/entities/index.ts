@@ -5,7 +5,7 @@ import { Buy } from "./Buy";
 import { CartProduct } from "./CartProduct";
 import { Delivery } from "./Delivery";
 import { Product } from "./Product";
-import { Suplier } from "./Suplier";
+import { Supplier } from "./Supplier";
 import { Trucks } from "./Trucks";
 
 export {
@@ -16,6 +16,6 @@ export {
   CartProduct,
   Delivery,
   Product,
-  Suplier,
+  Supplier,
   Trucks,
 };

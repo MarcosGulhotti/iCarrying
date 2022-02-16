@@ -8,15 +8,16 @@ import {
   registerSuplierController,
   updateSuplierController,
 } from "../controllers/suplier.controller";
+import { isAuthenticated } from "../middlewares/authentication.middleware";
 
 const router = Router();
 
 export const suplierRouter = () => {
   router.post("", validate(CreateSuplierSchema), registerSuplierController);
-  router.get("/:id", listSuplierByIdController);
+  router.get("/:id", isAuthenticated, listSuplierByIdController);
   router.get("", listAllSupliersController);
-  router.patch("/:id", updateSuplierController);
-  router.delete("/:id", deleteSuplierController);
+  router.patch("/:id", isAuthenticated, updateSuplierController);
+  router.delete("/:id", isAuthenticated, deleteSuplierController);
 
   return router;
 };

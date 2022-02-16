@@ -1,6 +1,6 @@
 import { getRepository } from "typeorm";
 import { Product } from "../entities/Product";
-import { Suplier } from "../entities/Suplier";
+import { Supplier } from "../entities/Supplier";
 import AppError from "../errors/AppError";
 
 interface IregisterProduct {
@@ -31,7 +31,7 @@ export const createProduct = async (
 ) => {
   try {
     const productRepository = getRepository(Product);
-    const suplierRepository = getRepository(Suplier);
+    const suplierRepository = getRepository(Supplier);
 
     const suplier = await suplierRepository.findOne(suplierID);
 
