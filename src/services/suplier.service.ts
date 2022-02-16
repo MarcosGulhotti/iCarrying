@@ -1,8 +1,8 @@
 import { getRepository } from "typeorm";
-import { Suplier } from "../entities/Suplier";
+import { Supplier } from "../entities/Supplier";
 import AppError from "../errors/AppError";
 
-interface IResgisterSuplier {
+interface IResgisterSupplier {
   name: string;
   cnpj: string;
   email: string;
@@ -10,7 +10,7 @@ interface IResgisterSuplier {
   address: string;
 }
 
-interface IUpdateSuplier {
+interface IUpdateSupplier {
   name?: string;
   email?: string;
   password?: string;
@@ -20,22 +20,22 @@ interface IUpdateSuplier {
   grade?: string;
 }
 
-const removePassword = (suplierInfos: Suplier) => {
-  const { id, name, cnpj, email, address, grade } = suplierInfos;
+const removePassword = (supplierInfos: Supplier) => {
+  const { id, name, cnpj, email, address, grade } = supplierInfos;
 
-  const suplierNoPassword = { id, name, cnpj, email, address, grade };
+  const supplierNoPassword = { id, name, cnpj, email, address, grade };
 
-  return suplierNoPassword;
+  return supplierNoPassword;
 };
 
-export const createSuplier = async (body: IResgisterSuplier) => {
+export const createSupplier = async (body: IResgisterSupplier) => {
   try {
-    const suplierRepository = getRepository(Suplier);
+    const supplierRepository = getRepository(Supplier);
 
-    const suplier = suplierRepository.create(body);
-    await suplierRepository.save(suplier);
+    const supplier = supplierRepository.create(body);
+    await supplierRepository.save(supplier);
 
-    const output = removePassword(suplier);
+    const output = removePassword(supplier);
 
     return output;
   } catch (e) {
@@ -43,17 +43,17 @@ export const createSuplier = async (body: IResgisterSuplier) => {
   }
 };
 
-export const getSuplierById = async (id: string) => {
+export const getSupplierById = async (id: string) => {
   try {
-    const suplierRepository = getRepository(Suplier);
+    const supplierRepository = getRepository(Supplier);
 
-    const suplier = await suplierRepository.findOne(id);
+    const supplier = await supplierRepository.findOne(id);
 
-    if (suplier === undefined) {
-      throw new AppError("suplier not exists", 400);
+    if (supplier === undefined) {
+      throw new AppError("supplier not exists", 400);
     }
 
-    const output = removePassword(suplier);
+    const output = removePassword(supplier);
 
     return output;
   } catch (e) {
@@ -61,23 +61,31 @@ export const getSuplierById = async (id: string) => {
   }
 };
 
-export const getAllSupliers = async () => {
+export const getAllSuppliers = async () => {
   try {
-    const suplierRepository = getRepository(Suplier);
+    const supplierRepository = getRepository(Supplier);
 
-    const supliers = await suplierRepository.find();
+    const suppliers = await supplierRepository.find();
 
-    return supliers;
+    return suppliers;
   } catch (e) {
     throw new AppError((e as any).message, 400);
   }
 };
 
-export const updateSuplier = async (id: string, data: IUpdateSuplier) => {
+export const updateSupplier = async (id: string, data: IUpdateSupplier, userID: string) => {
   try {
-    const suplierRepository = getRepository(Suplier);
+    const supplierRepository = getRepository(Supplier);
 
-    const suplier = await suplierRepository.findOne(id);
+    const supplier = await supplierRepository.findOne(id);
+
+    if (supplier === undefined) {
+      throw new AppError("supplier not exists", 400);
+    }
+
+    if(userID !== supplier.id){
+      throw new AppError("User is not Owner of this supplier", 401)
+    }
 
     if (data.id || data.password || data.cnpj || data.grade) {
       throw new AppError(
@@ -86,16 +94,13 @@ export const updateSuplier = async (id: string, data: IUpdateSuplier) => {
       );
     }
 
-    if (suplier === undefined) {
-      throw new AppError("suplier not exists", 400);
-    }
 
-    const newSuplier = await suplierRepository.save({
-      ...suplier,
+    const newSupplier = await supplierRepository.save({
+      ...supplier,
       ...data,
     });
 
-    const noPassword = removePassword(newSuplier);
+    const noPassword = removePassword(newSupplier);
 
     return noPassword;
   } catch (e) {
@@ -103,17 +108,22 @@ export const updateSuplier = async (id: string, data: IUpdateSuplier) => {
   }
 };
 
-export const deleteSuplier = async (id: string) => {
+export const deleteSupplier = async (id: string, userID: string) => {
   try {
-    const suplierRepository = getRepository(Suplier);
+    const supplierRepository = getRepository(Supplier);
 
-    const suplier = await suplierRepository.findOne(id);
+    const supplier = await supplierRepository.findOne(id);
 
-    if (suplier === undefined) {
-      throw new AppError("suplier not exists", 400);
+    if (supplier === undefined) {
+      throw new AppError("supplier not exists", 400);
     }
 
-    await suplierRepository.delete(suplier);
+    if(userID !== supplier.id){
+      throw new AppError("User is not Owner of this supplier", 401)
+    }
+
+
+    await supplierRepository.delete(supplier);
 
     return "deleted";
   } catch (e) {

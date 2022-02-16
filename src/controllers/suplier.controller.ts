@@ -1,10 +1,10 @@
 import { Request, Response, NextFunction } from "express";
 import {
-  createSuplier,
-  deleteSuplier,
-  getAllSupliers,
-  getSuplierById,
-  updateSuplier,
+  createSupplier,
+  deleteSupplier,
+  getAllSuppliers,
+  getSupplierById,
+  updateSupplier,
 } from "../services/suplier.service";
 
 export const registerSuplierController = async (
@@ -13,7 +13,7 @@ export const registerSuplierController = async (
   next: NextFunction
 ) => {
   try {
-    const suplier = await createSuplier(req.validateData);
+    const suplier = await createSupplier(req.validateData);
     return res.status(201).json(suplier);
   } catch (e) {
     next(e);
@@ -27,7 +27,7 @@ export const listSuplierByIdController = async (
 ) => {
   try {
     const { id } = req.params;
-    const suplier = await getSuplierById(id);
+    const suplier = await getSupplierById(id);
 
     return res.status(200).json(suplier);
   } catch (e) {
@@ -41,7 +41,7 @@ export const listAllSupliersController = async (
   next: NextFunction
 ) => {
   try {
-    const supliers = await getAllSupliers();
+    const supliers = await getAllSuppliers();
 
     return res.status(200).json({ data: supliers });
   } catch (e) {
@@ -57,8 +57,10 @@ export const updateSuplierController = async (
   try {
     const { id } = req.params;
     const data = req.body;
+    const { currentUser } = req;
+    const userID = currentUser.id;
 
-    const suplier = await updateSuplier(id, data);
+    const suplier = await updateSupplier(id, data, userID);
     return res.status(200).json(suplier);
   } catch (e) {
     next(e);
@@ -72,8 +74,10 @@ export const deleteSuplierController = async (
 ) => {
   try {
     const { id } = req.params;
+    const { currentUser } = req;
+    const userID = currentUser.id;
 
-    await deleteSuplier(id);
+    await deleteSupplier(id, userID);
 
     return res.status(204).json("deleted");
   } catch (e) {

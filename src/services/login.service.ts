@@ -1,5 +1,5 @@
 import { getRepository } from "typeorm";
-import { Market, Suplier } from "../entities";
+import { Market, Supplier } from "../entities";
 import AppError from "../errors/AppError";
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
@@ -30,7 +30,7 @@ export const loginInMarket = async (data: ILoginData) => {
       throw new AppError("Market email and password missmatch", 401)
     }
 
-    let token = jwt.sign({ email: market.email }, process.env.JWT_SECRET as string, {
+    let token = jwt.sign({ user: market }, process.env.JWT_SECRET as string, {
       expiresIn: process.env.JWT_EXPIRESIN,
     });
   
@@ -40,7 +40,7 @@ export const loginInMarket = async (data: ILoginData) => {
 
 export const loginInSupplier = async (data: ILoginData) => {
   const { email, password } = data;
-  const supplierRepository = getRepository(Suplier)
+  const supplierRepository = getRepository(Supplier)
   const supplier = await supplierRepository.findOne({email})
   
   if (!supplier) {
@@ -58,7 +58,7 @@ export const loginInSupplier = async (data: ILoginData) => {
     throw new AppError("Supplier email and password missmatch", 401)
   }
 
-  let token = jwt.sign({ email: supplier.email }, process.env.JWT_SECRET as string, {
+  let token = jwt.sign({ user: supplier }, process.env.JWT_SECRET as string, {
     expiresIn: process.env.JWT_EXPIRESIN,
   });
 

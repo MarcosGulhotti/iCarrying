@@ -5,7 +5,7 @@ import {
   ManyToOne,
   JoinColumn,
 } from "typeorm";
-import { Suplier } from "./Suplier";
+import { Supplier } from "./Supplier";
 
 @Entity()
 export class Product {
@@ -24,7 +24,7 @@ export class Product {
   @Column()
   image!: string;
 
-  @ManyToOne((type) => Suplier)
+  @ManyToOne((type) => Supplier)
   @JoinColumn()
-  suplier!: Suplier;
+  suplier!: Supplier;
 }
