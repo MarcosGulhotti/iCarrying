@@ -6,6 +6,7 @@ import {
   JoinColumn,
 } from "typeorm";
 import { Buy } from "./Buy";
+import { Trucks } from "./Trucks";
 
 @Entity()
 export class Delivery {
@@ -18,4 +19,8 @@ export class Delivery {
   @OneToOne((type) => Buy)
   @JoinColumn()
   buy!: Buy;
+
+  @OneToOne((type) => Trucks)
+  @JoinColumn()
+  trucks!: Trucks;
 }
