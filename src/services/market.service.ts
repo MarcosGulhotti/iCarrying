@@ -99,9 +99,13 @@ export const patchMarket = async (marketId: string, body: IUpdateBody) => {
 
 export const delMarket = async (marketId: string) => {
     const marketRepository = getRepository(Market);
-    const deleteResult = await marketRepository.delete(marketId);
-    
-    if(deleteResult.affected === 0) {
+    try {
+        const deleteResult = await marketRepository.delete(marketId);
+        
+        if(deleteResult.affected === 0) {
+            throw new AppError("Market not found", 404);
+        }
+    } catch(error) {
         throw new AppError("Market not found", 404);
     }
 }
