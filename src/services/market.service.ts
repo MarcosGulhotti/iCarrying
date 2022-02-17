@@ -1,6 +1,7 @@
 import { getRepository } from "typeorm";
 import { Market, Cart } from "../entities";
 import AppError from "../errors/AppError";
+import bcrypt from "bcrypt";
 
 interface IRegisterBody {
     name: string;
@@ -79,6 +80,10 @@ export const getAllMarkets = async () => {
 
 export const patchMarket = async (marketId: string, body: IUpdateBody) => {
     const marketRepository = getRepository(Market);
+
+    if (body.password) {
+        body.password = bcrypt.hashSync(body.password, 8);
+    }
 
     try {
         const market = await marketRepository.findOne(marketId);

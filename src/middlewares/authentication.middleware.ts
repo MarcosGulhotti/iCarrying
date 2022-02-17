@@ -9,7 +9,7 @@ export const isAuthenticated = (req: Request, res: Response, next: NextFunction)
         return next(new AppError("Missing authorization headres", 401));
     }
 
-    jwt.verify(token, process.env.SECRET as string, (error: any, decoded: any) => {
+    jwt.verify(token, process.env.JWT_SECRET as string, (error: any, decoded: any) => {
         if (error) {
             return next(new AppError("Unauthorized", 401));
         }
