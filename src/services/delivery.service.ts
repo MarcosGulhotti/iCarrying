@@ -8,6 +8,10 @@ interface IDeliveryBody {
     trucks_id: string;
 }
 
+interface IUpDelivery {
+    status: string;
+}
+
 export const createDelivery = async (body: IDeliveryBody) => {
     try {
         const deliveryRepository = getRepository(Delivery);
@@ -64,4 +68,43 @@ export const getAllDeliverys = async () => {
     const delivery = await deliveryRepository.find();
 
     return delivery;
+};
+
+export const deleteDelivery = async (id: string) => {
+    try {
+        const deliveryRepository = getRepository(Delivery);
+
+        const delivery = await deliveryRepository.findOne({
+            where: {
+                id: id,
+            },
+        });
+
+        if (delivery === undefined) {
+            throw new AppError("Delivery not exists", 404);
+        }
+
+        await deliveryRepository.delete(delivery);
+
+        return "deleted";
+    } catch (error) {
+        throw new AppError((error as any).message, 400);
+    }
+};
+
+export const upDelivery = async (deliveryId: string, body: IUpDelivery) => {
+    const deliveryRepository = getRepository(Delivery);
+
+    try {
+        const delivery = await deliveryRepository.findOne(deliveryId);
+        if (delivery !== undefined) {
+            await deliveryRepository.save({...delivery, ...body});
+
+            return delivery;
+        } else {
+            throw new AppError("Delivery not found", 404);
+        }
+    } catch (error) {
+        throw new AppError((error as any).message, 400);
+    }
 };
