@@ -12,7 +12,13 @@ export const addToCart = async (productId: string, currentUser: Market) => {
     if (product === undefined) {
       throw new AppError("Product not found.", 404);
     }
-    const cart = currentUser.cart;
+    const cart = await cartRepository.findOne({
+      where: { marketId: currentUser.id },
+    });
+
+    if (cart === undefined) {
+      throw new AppError("Missing market permission.", 401);
+    }
 
     const data = { status: "pending", product: product, cart: cart };
     const addedProduct = CartProductRepository.create(data);
