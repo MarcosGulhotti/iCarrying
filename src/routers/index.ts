@@ -5,6 +5,7 @@ import { truckRouter } from "./truck.router";
 import { productRouter } from "./product.router";
 import { suplierRouter } from "./suplier.router";
 import { cartProductRouter } from "./cartProduct";
+import { admRouter } from "./adm.router";
 
 export const initializerRouter = (app: Express) => {
   app.use("/market", marketRouter());
@@ -14,4 +15,5 @@ export const initializerRouter = (app: Express) => {
   app.use("/truck", truckRouter());
   app.use("/login", loginRouter());
   app.use("/cart", cartProductRouter());
+  app.use("/adm", admRouter());
 };

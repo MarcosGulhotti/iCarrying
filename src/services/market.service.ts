@@ -1,6 +1,7 @@
 import { getRepository } from "typeorm";
 import { Market, Cart } from "../entities";
 import AppError from "../errors/AppError";
+import bcrypt from "bcrypt";
 
 interface IRegisterBody {
     name: string;
@@ -80,6 +81,10 @@ export const getAllMarkets = async () => {
 export const patchMarket = async (marketId: string, body: IUpdateBody) => {
     const marketRepository = getRepository(Market);
 
+    if (body.password) {
+        body.password = bcrypt.hashSync(body.password, 8);
+    }
+
     try {
         const market = await marketRepository.findOne(marketId);
         if (market !== undefined) {
@@ -94,9 +99,13 @@ export const patchMarket = async (marketId: string, body: IUpdateBody) => {
 
 export const delMarket = async (marketId: string) => {
     const marketRepository = getRepository(Market);
-    const deleteResult = await marketRepository.delete(marketId);
-    
-    if(deleteResult.affected === 0) {
+    try {
+        const deleteResult = await marketRepository.delete(marketId);
+        
+        if(deleteResult.affected === 0) {
+            throw new AppError("Market not found", 404);
+        }
+    } catch(error) {
         throw new AppError("Market not found", 404);
     }
 }

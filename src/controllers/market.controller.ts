@@ -30,7 +30,7 @@ export const listMarkets = async (req: Request, res: Response) => {
 export const updateMarket = async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
     try {
-        await patchMarket(id,req.body);
+        await patchMarket(id,req.validateData);
         res.status(204).json({});
     } catch(error) {
         next(error);
