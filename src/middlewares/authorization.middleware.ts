@@ -1,19 +1,17 @@
 import { Request, Response, NextFunction } from "express";
 import AppError from "../errors/AppError";
 import { getRepository } from "typeorm";
-import { Adm } from "../entities";
+import { Adm, Market, Supplier } from "../entities";
 
-export const isAdmCheck = (req: Request, res: Response, next: NextFunction) => {
+export const isAdmCheck = async (req: Request, res: Response, next: NextFunction) => {
     if (req.isAuthorized) {
         return next();
     }
 
-    const { id } = req.currentUser;
-
     const admRepository = getRepository(Adm);
 
     try {
-        const adm = admRepository.findOne(id);
+        const adm = await admRepository.findOne(req.currentUser.id)
 
         if (adm !== undefined) {
             next();
@@ -23,12 +21,32 @@ export const isAdmCheck = (req: Request, res: Response, next: NextFunction) => {
     } catch(error) {
         next(new AppError("No authorization", 401))
     }
+
 }
 
-export const isOwnerCheck = (req: Request, res: Response, next: NextFunction) => {
+export const isMarketOwnerCheck = async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
 
-    if (req.currentUser?.id === id) {
+    const marketRepository = getRepository(Market); 
+
+    const market = await marketRepository.findOne(req.currentUser.id)
+
+
+    if (market?.id === id && id !== undefined) {
+        req.isAuthorized = true;
+    }
+
+    next();
+}
+
+export const isSupplierOwnerCheck = async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+
+    const supplierRepository = getRepository(Supplier); 
+
+    const supplier = await supplierRepository.findOne(req.currentUser.id)
+
+    if (supplier?.id === id && id !== undefined) {
         req.isAuthorized = true;
     }
 
