@@ -1,5 +1,5 @@
 import { getRepository } from "typeorm";
-import { Market, Supplier } from "../entities";
+import { Market, Supplier, Adm } from "../entities";
 import AppError from "../errors/AppError";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -56,6 +56,33 @@ export const loginInSupplier = async (data: ILoginData) => {
   }
 
   let token = jwt.sign({ user: supplier }, process.env.JWT_SECRET as string, {
+    expiresIn: process.env.JWT_EXPIRESIN,
+  });
+
+  return token;
+};
+
+export const loginInAdm = async (data: ILoginData) => {
+  const { email, password } = data;
+  const admRepository = getRepository(Adm);
+  const adm = await admRepository.findOne({ email });
+
+  if (!adm) {
+    throw new AppError("Admin not found on our database", 401);
+  }
+
+  const myPassword = await admRepository.findOne({
+    select: ["password"],
+    where: { email },
+  });
+
+  const match = bcrypt.compareSync(password, myPassword!.password);
+
+  if (!match) {
+    throw new AppError("Admin email and password missmatch", 401);
+  }
+
+  let token = jwt.sign({ user: adm }, process.env.JWT_SECRET as string, {
     expiresIn: process.env.JWT_EXPIRESIN,
   });
 
