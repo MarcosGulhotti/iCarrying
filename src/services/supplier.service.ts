@@ -67,13 +67,20 @@ export const getAllSuppliers = async () => {
 
     const suppliers = await supplierRepository.find();
 
-    return suppliers;
+    const newSuppliers: any = [];
+    suppliers.forEach((elm) => newSuppliers.push(removePassword(elm)));
+
+    return newSuppliers;
   } catch (e) {
     throw new AppError((e as any).message, 400);
   }
 };
 
-export const updateSupplier = async (id: string, data: IUpdateSupplier, userID: string) => {
+export const updateSupplier = async (
+  id: string,
+  data: IUpdateSupplier,
+  userID: string
+) => {
   try {
     const supplierRepository = getRepository(Supplier);
 
@@ -83,8 +90,8 @@ export const updateSupplier = async (id: string, data: IUpdateSupplier, userID: 
       throw new AppError("supplier not exists", 400);
     }
 
-    if(userID !== supplier.id){
-      throw new AppError("User is not Owner of this supplier", 401)
+    if (userID !== supplier.id) {
+      throw new AppError("User is not Owner of this supplier", 401);
     }
 
     if (data.id || data.password || data.cnpj || data.grade) {
@@ -93,7 +100,6 @@ export const updateSupplier = async (id: string, data: IUpdateSupplier, userID: 
         401
       );
     }
-
 
     const newSupplier = await supplierRepository.save({
       ...supplier,
@@ -118,10 +124,9 @@ export const deleteSupplier = async (id: string, userID: string) => {
       throw new AppError("supplier not exists", 400);
     }
 
-    if(userID !== supplier.id){
-      throw new AppError("User is not Owner of this supplier", 401)
+    if (userID !== supplier.id) {
+      throw new AppError("User is not Owner of this supplier", 401);
     }
-
 
     await supplierRepository.delete(supplier);
 
