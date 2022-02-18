@@ -17,15 +17,12 @@ export const productRouter = () => {
   router.post(
     "/supplier/:id",
     validate(CreateProductSchema),
+    isAuthenticated,
     createProductController
   );
-  router.get("/:id", isAuthenticated, listProductByIdController);
-  router.get("/", isAuthenticated, listAllProductsController);
-  router.get(
-    "/supplier/:id",
-    isAuthenticated,
-    listAllProductsFromSupplierController
-  );
+  router.get("/:id", listProductByIdController);
+  router.get("", listAllProductsController);
+  router.get("/supplier/:id", listAllProductsFromSupplierController);
   router.patch("/:id", isAuthenticated, updateProductController);
   router.delete("/:id", isAuthenticated, deleteProductController);
 

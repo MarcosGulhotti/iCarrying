@@ -3,13 +3,13 @@ import { loginRouter } from "./login.router";
 import { marketRouter } from "./market.router";
 import { truckRouter } from "./truck.router";
 import { productRouter } from "./product.router";
-import { suplierRouter } from "./suplier.router";
+import { supplierRouter } from "./supplier.router";
 import { cartProductRouter } from "./cartProduct";
 import { admRouter } from "./adm.router";
 
 export const initializerRouter = (app: Express) => {
   app.use("/market", marketRouter());
-  app.use("/suplier", suplierRouter());
+  app.use("/suplier", supplierRouter());
   app.use("/product", productRouter());
   app.use("/market", marketRouter());
   app.use("/truck", truckRouter());

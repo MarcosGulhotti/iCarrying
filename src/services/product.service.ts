@@ -43,7 +43,7 @@ export const createProduct = async (
     const suplier = await suplierRepository.findOne(suplierID);
 
     if (suplier === undefined) {
-      throw new AppError("Suplier not exists", 400);
+      throw new AppError("You don't have supplier permissions", 400);
     }
 
     const productExists = await productRepository.findOne({
@@ -51,7 +51,7 @@ export const createProduct = async (
     });
 
     if (productExists) {
-      throw new AppError("Suplier already have this product", 400);
+      throw new AppError("Supplier already have this product", 400);
     }
 
     const product = productRepository.create({ ...data, suplier: suplier });
