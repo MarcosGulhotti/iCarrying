@@ -62,7 +62,7 @@ export const updateTruck = async (req: Request) => {
         throw new AppError("Truck does not exist", 400);
       }
       
-      await truckRepository.update(id, req.body)
+      const updatedTruck = await truckRepository.update(id, req.body)
       const newTruck = await truckRepository.findOne(id);
   
       return newTruck;
@@ -76,7 +76,7 @@ export const deleteTruck = async (id: string) => {
 
     try {
         const deleteResult = await truckRespository.delete(id);
-
+        
         if(deleteResult.affected === 0) {
             throw new AppError("Truck not found", 404);
         }
