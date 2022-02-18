@@ -6,6 +6,7 @@ import { productRouter } from "./product.router";
 import { supplierRouter } from "./supplier.router";
 import { cartProductRouter } from "./cartProduct";
 import { admRouter } from "./adm.router";
+import { buyRouter } from "./buy.router";
 
 export const initializerRouter = (app: Express) => {
   app.use("/market", marketRouter());
@@ -16,4 +17,5 @@ export const initializerRouter = (app: Express) => {
   app.use("/login", loginRouter());
   app.use("/cart", cartProductRouter());
   app.use("/adm", admRouter());
+  app.use("/buy", buyRouter());
 };
