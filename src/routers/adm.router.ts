@@ -9,11 +9,11 @@ import { isAdmCheck } from "../middlewares/authorization.middleware";
 const router = Router();
 
 export const admRouter = () => {
-    router.post("", validate(CreateAdmSchema),/* isAuthenticated, isAdmCheck,*/ registerAdm);
+    router.post("", validate(CreateAdmSchema), isAuthenticated, isAdmCheck, registerAdm);
     router.get("/:id", getAdm);
     router.get("", listAdms);
-    router.patch("/:id", validate(UpdateAdmSchema),/* isAuthenticated, isAdmCheck,*/ updateAdm);
-    router.delete("/:id",/* isAuthenticated, isAdmCheck,*/ removeAdm);
+    router.patch("/:id", validate(UpdateAdmSchema), isAuthenticated, isAdmCheck, updateAdm);
+    router.delete("/:id", isAuthenticated, isAdmCheck, removeAdm);
 
     return router;
 }

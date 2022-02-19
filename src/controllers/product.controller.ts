@@ -34,7 +34,7 @@ export const listProductByIdController = async (
     const { id } = req.params;
     const product = await listProductById(id);
 
-    return res.status(200).json({ data: product });
+    return res.status(200).json(product);
   } catch (error) {
     next(error);
   }
@@ -48,7 +48,7 @@ export const listAllProductsController = async (
   try {
     const product = await listAllProducts();
 
-    return res.status(200).json({ data: product });
+    return res.status(200).json(product);
   } catch (error) {
     next(error);
   }
@@ -64,7 +64,7 @@ export const listAllProductsFromSupplierController = async (
 
     const product = await listAllProductsFromSupplier(id);
 
-    return res.status(200).json({ data: product });
+    return res.status(200).json(product);
   } catch (error) {
     next(error);
   }

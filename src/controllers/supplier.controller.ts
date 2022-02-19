@@ -1,55 +1,55 @@
 import { Request, Response, NextFunction } from "express";
 import {
   createSupplier,
-  deleteSupplier,
-  getAllSuppliers,
   getSupplierById,
+  getAllSuppliers,
   updateSupplier,
-} from "../services/suplier.service";
+  deleteSupplier,
+} from "../services/supplier.service";
 
-export const registerSuplierController = async (
+export const registerSupplierController = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const suplier = await createSupplier(req.validateData);
-    return res.status(201).json(suplier);
+    const supplier = await createSupplier(req.validateData);
+    return res.status(201).json(supplier);
   } catch (e) {
     next(e);
   }
 };
 
-export const listSuplierByIdController = async (
+export const listSupplierByIdController = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
     const { id } = req.params;
-    const suplier = await getSupplierById(id);
+    const supplier = await getSupplierById(id);
 
-    return res.status(200).json(suplier);
+    return res.status(200).json(supplier);
   } catch (e) {
     next(e);
   }
 };
 
-export const listAllSupliersController = async (
+export const listAllSuppliersController = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const supliers = await getAllSuppliers();
+    const suppliers = await getAllSuppliers();
 
-    return res.status(200).json({ data: supliers });
+    return res.status(200).json(suppliers);
   } catch (e) {
     next(e);
   }
 };
 
-export const updateSuplierController = async (
+export const updateSupplierController = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -60,14 +60,14 @@ export const updateSuplierController = async (
     const { currentUser } = req;
     const userID = currentUser.id;
 
-    const suplier = await updateSupplier(id, data, userID);
-    return res.status(200).json(suplier);
+    const supplier = await updateSupplier(id, data, userID);
+    return res.status(200).json(supplier);
   } catch (e) {
     next(e);
   }
 };
 
-export const deleteSuplierController = async (
+export const deleteSupplierController = async (
   req: Request,
   res: Response,
   next: NextFunction
