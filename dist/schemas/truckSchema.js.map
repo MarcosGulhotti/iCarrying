@@ -1,1 +1,0 @@
-{"version":3,"file":"truckSchema.js","sourceRoot":"","sources":["../../src/schemas/truckSchema.ts"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;;;;AAAA,uCAA2B;AAEd,QAAA,WAAW,GAAG,GAAG,CAAC,MAAM,EAAE,CAAC,KAAK,CAAC;IAC1C,KAAK,EAAE,GAAG,CAAC,MAAM,EAAE,CAAC,OAAO,CAAC,+BAA+B,EAAE,mEAAmE,CAAC,CAAC,QAAQ,EAAE;CAC/I,CAAC,CAAA"}
