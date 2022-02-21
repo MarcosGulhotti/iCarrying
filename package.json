@@ -4,8 +4,10 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "start": "node dist/src/server.js",
+    "build": "tsc",
     "typeorm": "ts-node-dev node_modules/typeorm/cli.js",
-    "dev": "ts-node-dev src/server.ts"
+    "dev": "ts-node-dev server.ts"
   },
   "dependencies": {
     "@types/bcrypt": "^5.0.0",
