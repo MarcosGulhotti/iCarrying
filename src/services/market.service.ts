@@ -88,7 +88,9 @@ export const patchMarket = async (marketId: string, body: IUpdateBody) => {
   try {
     const market = await marketRepository.findOne(marketId);
     if (market !== undefined) {
-      await marketRepository.save({ ...market, ...body });
+      const marketUpdate = await marketRepository.save({ ...market, ...body });
+
+      return removePassword(marketUpdate);
     } else {
       throw new AppError("Market not found", 404);
     }
