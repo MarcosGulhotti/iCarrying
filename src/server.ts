@@ -1,7 +1,7 @@
 import { createConnection } from "typeorm";
 import app from "./app";
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000;
 
 createConnection().then( () => {
   console.log("Database connected!");
