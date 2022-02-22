@@ -1,7 +1,7 @@
 import { addToCart } from "../services/cartProduct.service";
 import { Request, Response, NextFunction } from "express";
 
-export const createNewCart = async (
+export const addInCart = async (
   req: Request,
   res: Response,
   next: NextFunction

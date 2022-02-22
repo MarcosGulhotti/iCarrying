@@ -5,7 +5,7 @@ const router = Router();
 
 export const loginRouter = () => {
   router.post("/market", marketLogin);
-  router.post("/suplier", supplierLogin);
+  router.post("/supplier", supplierLogin);
   router.post("/adm", admLogin);
 
   return router;

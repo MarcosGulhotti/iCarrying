@@ -5,7 +5,7 @@ import AppError from "../errors/AppError";
 export const addToCart = async (productId: string, currentUser: Market) => {
   const productRepository = getRepository(Product);
   const cartRepository = getRepository(Cart);
-  const CartProductRepository = getRepository(CartProduct);
+  const cartProductRepository = getRepository(CartProduct);
 
   try {
     const product = await productRepository.findOne(productId);
@@ -21,8 +21,8 @@ export const addToCart = async (productId: string, currentUser: Market) => {
     }
 
     const data = { status: "pending", product: product, cart: cart };
-    const addedProduct = CartProductRepository.create(data);
-    await CartProductRepository.save(addedProduct);
+    const addedProduct = cartProductRepository.create(data);
+    await cartProductRepository.save(addedProduct);
     return addedProduct;
   } catch (error) {
     throw new AppError((error as any).message, 400);
