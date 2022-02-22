@@ -28,3 +28,19 @@ export const buy = async (currentUser: Market) => {
 
     return buy;
 }
+
+export const getBuyById = async (buyId: string) => {
+    const buyRepository = getRepository(Buy);
+
+    try {
+        const buy = await buyRepository.findOne(buyId);
+
+        if (buy !== undefined) {
+            return buy;
+        } else {
+            throw new AppError("Buy not found", 404);
+        }
+    } catch (error) {
+        throw new AppError("Buy not found", 404);
+    }
+}
