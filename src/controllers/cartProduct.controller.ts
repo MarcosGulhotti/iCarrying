@@ -10,6 +10,7 @@ export const createNewCart = async (
   const currentUser = req.currentUser;
   try {
     const addedProduct = await addToCart(productId, currentUser);
+    console.log(addedProduct.product);
     res.status(201).json(addedProduct);
   } catch (error) {
     next(error);
