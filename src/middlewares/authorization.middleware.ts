@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import AppError from "../errors/AppError";
 import { getRepository } from "typeorm";
-import { Adm, CartProduct, Market, Supplier, Buy } from "../entities";
+import { Adm, CartProduct, Market, Supplier, Buy, Delivery, Product } from "../entities";
 
 export const isAdmCheck = async (req: Request, res: Response, next: NextFunction) => {
     if (req.isAuthorized) {
@@ -85,5 +85,48 @@ export const isMarketCheck = (req: Request, res: Response, next: NextFunction) =
         next(new AppError("No market permission", 401));
     } else {
         next();
+    }
+}
+
+export const blockUnauthorizedDelivery = async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+    
+    const deliveryRepository = getRepository(Delivery);
+    const admRepository = getRepository(Adm);
+    const cartProductRepository = getRepository(CartProduct);
+    const marketRepository = getRepository(Market);
+    const productRepository = getRepository(Product)
+
+    try {
+        const delivery = await deliveryRepository.findOne(id, {relations: ["buy"]});
+
+        if (delivery !== undefined){
+            const adm = await admRepository.findOne(req.currentUser.id);
+            if (adm !== undefined){
+                return next();
+            }
+
+            const cartProduct = await cartProductRepository.findOne({where: {buy: delivery.buy}, relations: ["cart", "product"]});
+
+            const market = await marketRepository.findOne(cartProduct?.cart.marketId);
+
+            if(market?.id === req.currentUser.id) {
+                return next();
+            }
+
+            const product = await productRepository.findOne(cartProduct?.product.id,{relations: ["supplier"]});
+
+            const supplier = product?.supplier;
+
+            if(supplier?.id === req.currentUser.id) {
+                return next();
+            }
+
+            next(new AppError("Not adm/owner delivery permission", 401));
+        } else {
+            next();
+        }
+    } catch (error) {
+        next(new AppError("Id not found", 404));
     }
 }
