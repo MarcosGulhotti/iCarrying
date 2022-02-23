@@ -14,7 +14,6 @@ export const initializerRouter = (app: Express) => {
     app.use("/market", marketRouter());
     app.use("/supplier", supplierRouter());
     app.use("/product", productRouter());
-    app.use("/market", marketRouter());
     app.use("/truck", truckRouter());
     app.use("/login", loginRouter());
     app.use("/cart", cartProductRouter());
