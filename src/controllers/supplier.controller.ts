@@ -5,6 +5,7 @@ import {
   getAllSuppliers,
   updateSupplier,
   deleteSupplier,
+  addGrade,
 } from "../services/supplier.service";
 
 export const registerSupplierController = async (
@@ -84,3 +85,16 @@ export const deleteSupplierController = async (
     next(e);
   }
 };
+
+export const vote = async (req: Request, res: Response, next: NextFunction) => {
+  const { currentUser } = req;
+  const { grade } = req.body;
+  const { id } = req.params;
+
+  try {
+    const gradeElement = await addGrade(currentUser,grade,id);
+    res.status(200).send(gradeElement);
+  } catch (e) {
+    next(e);
+  }
+}

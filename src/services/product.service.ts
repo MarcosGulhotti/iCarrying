@@ -17,7 +17,7 @@ interface IupdateProduct {
   image?: string;
 }
 
-const removeSuplier = (product: Product) => {
+const removeSupplier = (product: Product) => {
   const { id, name, price, description, image } = product;
 
   const newProduct = {
@@ -26,7 +26,7 @@ const removeSuplier = (product: Product) => {
     price,
     description,
     image,
-    suplierId: product.suplier.id,
+    supplierId: product.supplier.id,
   };
 
   return newProduct;
@@ -34,31 +34,31 @@ const removeSuplier = (product: Product) => {
 
 export const createProduct = async (
   data: IregisterProduct,
-  suplierID: string
+  supplierID: string
 ) => {
   try {
     const productRepository = getRepository(Product);
-    const suplierRepository = getRepository(Supplier);
+    const supplierRepository = getRepository(Supplier);
 
-    const suplier = await suplierRepository.findOne(suplierID);
+    const supplier = await supplierRepository.findOne(supplierID);
 
-    if (suplier === undefined) {
+    if (supplier === undefined) {
       throw new AppError("You don't have supplier permissions", 400);
     }
 
     const productExists = await productRepository.findOne({
-      where: { suplier: suplier, name: data.name },
+      where: { supplier: supplier, name: data.name },
     });
 
     if (productExists) {
       throw new AppError("Supplier already have this product", 400);
     }
 
-    const product = productRepository.create({ ...data, suplier: suplier });
+    const product = productRepository.create({ ...data, supplier: supplier });
 
     await productRepository.save(product);
 
-    return removeSuplier(product);
+    return removeSupplier(product);
   } catch (error) {
     throw new AppError((error as any).message, 400);
   }
@@ -97,7 +97,7 @@ export const listAllProductsFromSupplier = async (supplierID: string) => {
     const productRepository = getRepository(Product);
 
     const products = await productRepository.find({
-      where: { suplier: supplierID },
+      where: { supplier: supplierID },
     });
 
     return products;
@@ -113,17 +113,17 @@ export const updateProduct = async (
 ) => {
   try {
     const productRepository = getRepository(Product);
-    const suplierRepository = getRepository(Supplier);
+    const supplierRepository = getRepository(Supplier);
 
-    const suplier = await suplierRepository.findOne(supplierID);
+    const supplier = await supplierRepository.findOne(supplierID);
 
-    if (suplier === undefined) {
-      throw new AppError("Suplier not exists", 400);
+    if (supplier === undefined) {
+      throw new AppError("Supplier not exists", 400);
     }
 
     const product = await productRepository.findOne({
       where: {
-        suplier: suplier,
+        supplier: supplier,
         id: id,
       },
     });
@@ -148,17 +148,17 @@ export const updateProduct = async (
 export const deleteProduct = async (id: string, supplierID: string) => {
   try {
     const productRepository = getRepository(Product);
-    const suplierRepository = getRepository(Supplier);
+    const supplierRepository = getRepository(Supplier);
 
-    const suplier = await suplierRepository.findOne(supplierID);
+    const supplier = await supplierRepository.findOne(supplierID);
 
-    if (suplier === undefined) {
-      throw new AppError("Suplier not exists", 400);
+    if (supplier === undefined) {
+      throw new AppError("Supplier not exists", 400);
     }
 
     const product = await productRepository.findOne({
       where: {
-        suplier: suplier,
+        supplier: supplier,
         id: id,
       },
     });

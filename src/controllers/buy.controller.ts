@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import { getRepository } from "typeorm";
 import { CartProduct } from "../entities";
-import { buy } from "../services/buy.service";
 import { transport, mailTemplateOptions } from "../services/email.service";
+import { buy, getBuyById } from "../services/buy.service";
 
 export const purchase = async (
   req: Request,
@@ -46,3 +46,15 @@ export const purchase = async (
     next(error);
   }
 };
+
+
+export const getBuy = async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+
+    try {
+        const buy = await getBuyById(id);
+        res.status(200).json(buy);
+    } catch(error) {
+        next(error);
+    }
+}
