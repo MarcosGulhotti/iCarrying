@@ -7,3 +7,7 @@ export const CreateSupplierSchema = yup.object().shape({
     password: yup.string().min(8).required(),
     address: yup.string().required()
 })
+
+export const VoteSupplierSchema = yup.object().shape({
+    grade: yup.number().min(0).max(10).required()
+})
