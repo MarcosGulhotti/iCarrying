@@ -16,6 +16,9 @@ export class Delivery {
   @Column()
   status!: string;
 
+  @Column()
+  address!: string;
+
   @OneToOne((type) => Buy)
   @JoinColumn()
   buy!: Buy;
