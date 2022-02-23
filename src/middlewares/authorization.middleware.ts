@@ -75,3 +75,15 @@ export const isBuyOwnerCheck = async (req: Request, res: Response, next: NextFun
         next(new AppError("Buy not found", 404));
     }
 }
+
+export const isMarketCheck = (req: Request, res: Response, next: NextFunction) => {
+    const marketRepository = getRepository(Market);
+
+    const market = marketRepository.findOne(req.currentUser.id);
+
+    if (market === undefined){
+        next(new AppError("No market permission", 401));
+    } else {
+        next();
+    }
+}

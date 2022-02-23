@@ -4,6 +4,8 @@ import { buy, getBuyById } from "../services/buy.service";
 export const purchase = async (req: Request, res: Response, next: NextFunction) => {
     const { currentUser } = req;
 
+    
+    
     try {
         const purchaseData = await buy(currentUser);
 

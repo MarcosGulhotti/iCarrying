@@ -1,4 +1,6 @@
 import { getRepository } from "typeorm";
+import { Market } from "../entities";
+import { Grade } from "../entities";
 import { Supplier } from "../entities/Supplier";
 import AppError from "../errors/AppError";
 
@@ -17,7 +19,7 @@ interface IUpdateSupplier {
   address?: string;
   cnpj?: string;
   id?: string;
-  grade?: string;
+  grade?: number;
 }
 
 const removePassword = (supplierInfos: Supplier) => {
@@ -135,3 +137,34 @@ export const deleteSupplier = async (id: string, userID: string) => {
     throw new AppError((e as any).message, 400);
   }
 };
+
+export const addGrade = async (market: Market, grade: number, supplierId: string) => {
+  const supplierRepository = getRepository(Supplier);
+  const gradeRepository = getRepository(Grade)
+  try {
+    const supplier = await supplierRepository.findOne(supplierId);
+
+    if (supplier === undefined) {
+      throw new AppError("Supplier not found", 404);
+    }
+
+    let gradeElement = await gradeRepository.findOne({where: {market, supplier}});
+
+    if (gradeElement === undefined){
+      gradeElement = gradeRepository.create({grade, market, supplier});
+    }
+
+    const gradeElementSaved = await gradeRepository.save({...gradeElement, grade});
+
+    const supplierGrades = await gradeRepository.find({where: {supplier}});
+
+    const average = supplierGrades.reduce((acc, element) => acc + element.grade, 0)/supplierGrades.length;
+
+    await supplierRepository.save({...supplier, grade: average});
+
+    return gradeElementSaved;
+  } catch (error) {
+    console.log(error);
+    throw new AppError("Supplier not found", 404);
+  }
+}

@@ -7,8 +7,10 @@ import {
   listSupplierByIdController,
   registerSupplierController,
   updateSupplierController,
+  vote,
 } from "../controllers/supplier.controller";
 import { isAuthenticated } from "../middlewares/authentication.middleware";
+import { isMarketCheck } from "../middlewares/authorization.middleware";
 
 const router = Router();
 
@@ -18,6 +20,7 @@ export const supplierRouter = () => {
   router.get("", listAllSuppliersController);
   router.patch("/:id", isAuthenticated, updateSupplierController);
   router.delete("/:id", isAuthenticated, deleteSupplierController);
+  router.post("/:id/vote", isAuthenticated, isMarketCheck, vote);
 
   return router;
 };

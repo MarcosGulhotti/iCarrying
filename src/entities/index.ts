@@ -7,6 +7,7 @@ import { Delivery } from "./Delivery";
 import { Product } from "./Product";
 import { Supplier } from "./Supplier";
 import { Trucks } from "./Trucks";
+import { Grade } from "./Grade";
 
 export {
   Cart,
@@ -18,4 +19,5 @@ export {
   Product,
   Supplier,
   Trucks,
+  Grade
 };

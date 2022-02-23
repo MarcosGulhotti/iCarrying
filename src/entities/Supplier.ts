@@ -21,8 +21,8 @@ export class Supplier {
   @Column()
   address!: string;
 
-  @Column({ nullable: true, default: 0 })
-  grade!: string;
+  @Column({ type: "float", nullable: true, default: 0 })
+  grade!: number;
 
   @BeforeInsert()
   hashPassword() {
