@@ -1,0 +1,20 @@
+<div>
+  <h2> Hello, {{name}}!</h2>
+  <h3> Your purchase has been successfully confirmed, you can see the purchase details below. </h3>
+  <h3> Purchase details: </h3>
+
+  <table style="border: 1px solid black;">
+    {{#each products}}
+            <tr>
+                <td width="350" style="border: 1px solid black ;">
+                    {{this.name}}
+                </td>
+                <td width="80" style="border: 1px solid black ;">
+                    {{this.description}}
+                </td>
+                <td width="65" style="border: 1px solid black; color:red">
+                    {{this.price}}
+                </td>
+            {{/each}}
+        </table>
+</div>
