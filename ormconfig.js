@@ -19,10 +19,10 @@ devEnv = {
 const prodEnv = {
   type: "postgers",
   url: process.env.DATABASE_URL,
-  entities: ["./dist/entities/**/*.js"],
-  migrations: ["./dist/migrations/*.js"],
+  entities: ["./dist/src/entities/**/*.js"],
+  migrations: ["./dist/src/migrations/*.js"],
   cli: {
-    migrationsDir: "./dist/migrations",
+    migrationsDir: "./dist/src/migrations",
   },
   synchronize: false,
   ssl:
