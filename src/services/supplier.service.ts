@@ -154,17 +154,18 @@ export const addGrade = async (market: Market, grade: number, supplierId: string
       gradeElement = gradeRepository.create({grade, market, supplier});
     }
 
-    const gradeElementSaved = await gradeRepository.save({...gradeElement, grade});
+    let gradeElementSaved = await gradeRepository.save({...gradeElement, grade});
 
     const supplierGrades = await gradeRepository.find({where: {supplier}});
 
     const average = supplierGrades.reduce((acc, element) => acc + element.grade, 0)/supplierGrades.length;
 
-    await supplierRepository.save({...supplier, grade: average});
+    const supplierUpdated = await supplierRepository.save({...supplier, grade: average});
+
+    gradeElementSaved = await gradeRepository.save({...gradeElementSaved, supplier: supplierUpdated});
 
     return gradeElementSaved;
   } catch (error) {
-    console.log(error);
     throw new AppError("Supplier not found", 404);
   }
 }
