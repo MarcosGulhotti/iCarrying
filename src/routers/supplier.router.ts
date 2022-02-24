@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { validate } from "../middlewares/validation.middleware";
-import { CreateSupplierSchema } from "../schemas/supplierSchema";
+import { CreateSupplierSchema, VoteSupplierSchema } from "../schemas/supplierSchema";
 import {
   deleteSupplierController,
   listAllSuppliersController,
@@ -20,7 +20,7 @@ export const supplierRouter = () => {
   router.get("", listAllSuppliersController);
   router.patch("/:id", isAuthenticated, updateSupplierController);
   router.delete("/:id", isAuthenticated, deleteSupplierController);
-  router.post("/:id/vote", isAuthenticated, isMarketCheck, vote);
+  router.post("/:id/vote", validate(VoteSupplierSchema), isAuthenticated, isMarketCheck, vote);
 
   return router;
 };

@@ -7,8 +7,8 @@ import {supplierRouter} from "./supplier.router";
 import {cartProductRouter} from "./cartProduct";
 import {admRouter} from "./adm.router";
 import {buyRouter} from "./buy.router";
-
 import {deliveryRouter} from "./delivery.router";
+import { geolocalizationRouter } from "./geolocalization.router";
 
 export const initializerRouter = (app: Express) => {
     app.use("/market", marketRouter());
@@ -20,4 +20,5 @@ export const initializerRouter = (app: Express) => {
     app.use("/adm", admRouter());
     app.use("/buy", buyRouter());
     app.use("/delivery", deliveryRouter());
+    app.use("/geolocalization", geolocalizationRouter());
 };

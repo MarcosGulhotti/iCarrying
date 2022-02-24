@@ -4,6 +4,7 @@ import AppError from "../errors/AppError";
 
 interface IDeliveryBody {
     status: string;
+    address: string;
     buy_id: string;
     trucks_id: string;
 }
@@ -32,6 +33,7 @@ export const createDelivery = async (body: IDeliveryBody) => {
 
         const data = {
             status: body.status,
+            address: body.address,
             trucks: truck,
             buy: buy,
         };

@@ -14,6 +14,8 @@
     "@types/bcrypt": "^5.0.0",
     "bcrypt": "^5.0.1",
     "express": "^4.17.2",
+    "google-distance": "^1.0.1",
+    "iageo": "^1.0.0",
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.7.3",
     "pgtools": "^0.3.2",
