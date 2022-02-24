@@ -1810,7 +1810,11 @@ google-distance@^1.0.1:
   dependencies:
     request "~2.34.0"
 
+<<<<<<< HEAD
+graceful-fs@^4.1.2, graceful-fs@^4.2.9:
+=======
 graceful-fs@^4.1.2, graceful-fs@^4.2.4, graceful-fs@^4.2.9:
+>>>>>>> 8421a9b0c3d59e2ae2f79147c51b35cc1989baef
   version "4.2.9"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.9.tgz#041b05df45755e587a24942279b9d113146e1c96"
   integrity sha512-NtNxqUcXgpW2iMrfqSfR73Glt39K+BLwWsPs94yR63v45T0Wbej7eRmL5cWfwEgqXnmjQp3zaJTshdRW/qC2ZQ==
@@ -2902,6 +2906,8 @@ node-uuid@~1.4.0:
   version "1.4.8"
   resolved "https://registry.yarnpkg.com/node-uuid/-/node-uuid-1.4.8.tgz#b040eb0923968afabf8d32fb1f17f1167fdab907"
   integrity sha1-sEDrCSOWivq/jTL7HxfxFn/auQc=
+<<<<<<< HEAD
+=======
 
 nodemailer-express-handlebars@^4.0.0:
   version "4.0.0"
@@ -2914,6 +2920,7 @@ nodemailer@^6.7.2:
   version "6.7.2"
   resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-6.7.2.tgz#44b2ad5f7ed71b7067f7a21c4fedabaec62b85e0"
   integrity sha512-Dz7zVwlef4k5R71fdmxwR8Q39fiboGbu3xgswkzGwczUfjp873rVxt1O46+Fh0j1ORnAC6L9+heI8uUpO6DT7Q==
+>>>>>>> 8421a9b0c3d59e2ae2f79147c51b35cc1989baef
 
 nopt@^5.0.0:
   version "5.0.0"
