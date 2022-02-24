@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn, ManyToOne } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
 import { Market, Supplier } from ".";
 
 @Entity()
@@ -9,7 +9,7 @@ export class Grade {
     @Column({type: "float"})
     grade!: number;
 
-    @OneToOne(type => Market) @JoinColumn()
+    @ManyToOne(type => Market)
     market!: Market;
 
     @ManyToOne(type => Supplier)
