@@ -19,6 +19,8 @@
     "@types/nodemailer-express-handlebars": "^4.0.2",
     "bcrypt": "^5.0.1",
     "express": "^4.17.2",
+    "google-distance": "^1.0.1",
+    "iageo": "^1.0.0",
     "jsonwebtoken": "^8.5.1",
     "nodemailer": "^6.7.2",
     "nodemailer-express-handlebars": "^4.0.0",

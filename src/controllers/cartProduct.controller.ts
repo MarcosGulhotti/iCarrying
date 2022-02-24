@@ -26,7 +26,6 @@ export const seeProductsCart = async (
         const cart = await seeCart(currentUser);
         res.status(201).json(cart);
     } catch (error) {
-        console.log(error);
         next(error);
     }
 };

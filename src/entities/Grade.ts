@@ -6,7 +6,7 @@ export class Grade {
     @PrimaryGeneratedColumn("uuid")
     id!: string;
 
-    @Column()
+    @Column({type: "float"})
     grade!: number;
 
     @OneToOne(type => Market) @JoinColumn()
