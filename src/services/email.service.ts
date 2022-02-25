@@ -15,10 +15,10 @@ export const transport = nodemailer.createTransport({
 
 const handlebarsOption: NodemailerExpressHandlebarsOptions = {
   viewEngine: {
-    partialsDir: path.resolve(__dirname, "..", "templates"),
+    partialsDir: path.resolve(__dirname, "../../../src", "templates"),
     defaultLayout: undefined,
   },
-  viewPath: path.resolve(__dirname, "..", "templates"),
+  viewPath: path.resolve(__dirname, "../../../src", "templates"),
 };
 
 transport.use("compile", hbs(handlebarsOption));
